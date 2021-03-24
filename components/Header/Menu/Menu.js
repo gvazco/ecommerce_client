@@ -19,7 +19,7 @@ export default function MenuWeb() {
 					</Grid.Column>
 				</Grid>
 			</Container>
-			<BasicModal show={showModal} setShow={setShowModal}>
+			<BasicModal show={showModal} setShow={setShowModal} title="Inicia Sesión">
 				<h2>Contenido del Modal</h2>
 			</BasicModal>
 		</div>
