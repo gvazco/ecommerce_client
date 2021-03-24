@@ -1,0 +1,8 @@
+name s3: gamer-ecommerce
+
+S3BucketAccessGameEcommerce
+
+Usuario : StrapiGameEcommerce
+ID de Clave Acceso : AKIASWAV5AY3RRBUKCOT
+Clave de Acceso Secreta : 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
+
