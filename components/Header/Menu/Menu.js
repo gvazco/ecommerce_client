@@ -2,10 +2,16 @@ import { useState } from "react";
 import { Container, Menu, Grid, Icon, Label } from "semantic-ui-react";
 import Link from "next/link";
 import BasicModal from "../../Modal/BasicModal";
+import Auth from "../../Auth";
+import useAuth from "../../../hooks/useAuth";
 
 export default function MenuWeb() {
 	const [showModal, setShowModal] = useState(false);
+	const [titleModal, setTitleModal] = useState("Inciar Sesión");
+	const { auth, logout } = useAuth();
+
 	const onShowModal = () => setShowModal(true);
+	const onCloseModal = () => setShowModal(false);
 
 	return (
 		<div className="menu">
@@ -15,12 +21,21 @@ export default function MenuWeb() {
 						<MenuPlatforms />
 					</Grid.Column>
 					<Grid.Column className="menu__right" width={6}>
-						<MenuOptions onShowModal={onShowModal} />
+						{auth ? (
+							<button onClick={logout}>Cerrar Sesión</button>
+						) : (
+							<MenuOptions onShowModal={onShowModal} />
+						)}
 					</Grid.Column>
 				</Grid>
 			</Container>
-			<BasicModal show={showModal} setShow={setShowModal} title="Inicia Sesión">
-				<h2>Contenido del Modal</h2>
+			<BasicModal
+				show={showModal}
+				setShow={setShowModal}
+				title={titleModal}
+				size="small"
+			>
+				<Auth onCloseModal={onCloseModal} setTitleModal={setTitleModal} />
 			</BasicModal>
 		</div>
 	);
@@ -29,14 +44,17 @@ export default function MenuWeb() {
 function MenuPlatforms() {
 	return (
 		<Menu>
-			<Link href="/playstation">
-				<Menu.Item as="a">PlayStation</Menu.Item>
+			<Link href="/accesorios">
+				<Menu.Item as="a">Accesorios</Menu.Item>
 			</Link>
-			<Link href="/xbox">
-				<Menu.Item as="a">Xbox</Menu.Item>
+			<Link href="/herramientas">
+				<Menu.Item as="a">Herramienta</Menu.Item>
 			</Link>
-			<Link href="/switch">
-				<Menu.Item as="a">Switch</Menu.Item>
+			<Link href="/remates">
+				<Menu.Item as="a">Remates</Menu.Item>
+			</Link>
+			<Link href="/equipamento">
+				<Menu.Item as="a">Equipamento</Menu.Item>
 			</Link>
 		</Menu>
 	);
