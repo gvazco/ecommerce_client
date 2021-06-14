@@ -12,3 +12,14 @@ export function getToken() {
 export function removeToken() {
 	localStorage.removeItem(TOKEN);
 }
+
+export function hasExpiredToken(token) {
+	const tokenDecode = jwtDecode(token);
+	const expireDate = tokenDecode.exp * 1000;
+	const currentData = new Date().getTime();
+	if (currentData > expireDate) {
+		return true;
+	} else {
+		return false;
+	}
+}
