@@ -7,6 +7,9 @@ import { getMeApi } from "../api/user";
 import ChangeNameForm from "../components/Account/ChangeNameForm";
 import ChangeEmailForm from "../components/Account/ChangeEmailForm";
 import ChangePasswordForm from "../components/Account/ChangePasswordForm";
+import BasicModal from "../components/Modal/BasicModal";
+import AddressForm from "../components/Account/AddressForm";
+import ListAddress from "../components/Account/ListAddress";
 
 export default function Account() {
 	const [user, setUser] = useState(undefined);
@@ -61,14 +64,41 @@ function Configuration(props) {
 }
 
 function Addresses() {
+	const [showModal, setShowModal] = useState(false);
+	const [titleModal, setTitleModal] = useState("");
+	const [formModal, setFormModal] = useState(null);
+	const [reloadAddresses, setReloadAddresses] = useState(false);
+
+	const openModal = (title, address) => {
+		setTitleModal(title);
+		setFormModal(
+			<AddressForm
+				setReloadAddresses={setReloadAddresses}
+				setShowModal={setShowModal}
+				newAddress={address ? false : true}
+				address={address || null}
+			/>
+		);
+		setShowModal(true);
+	};
+
 	return (
 		<div className="account__addresses">
 			<div className="title">
-				Direcciones <Icon name="plus" link />
+				Direcciones
+				<Icon name="plus" link onClick={() => openModal("Nueva Dirección")} />
 			</div>
 			<div className="data">
-				<p>Lista de direcciones...</p>
+				<ListAddress
+					reloadAddresses={reloadAddresses}
+					setReloadAddresses={setReloadAddresses}
+					openModal={openModal}
+				/>
 			</div>
+
+			<BasicModal show={showModal} setShow={setShowModal} title={titleModal}>
+				{formModal}
+			</BasicModal>
 		</div>
 	);
 }
