@@ -28,6 +28,7 @@
 		display: flex !important;
 		align-items: center;
 		justify-content: flex-end;
+		z-index: 999;
 
 		.ui.icon.input > input {
 			padding-right: 5px !important;
@@ -40,21 +41,31 @@
 			input {
 				background-color: transparent !important;
 				border: 0;
-				border-bottom: 2px solid $primary !important;
+				border-bottom: 2px solid black !important;
 				border-radius: 0;
-				color: $primary !important;
+				color: black !important;
 				padding: 5px 0 !important;
-				width: 220px;
 				font-size: 20px;
 				transition: width 0.7s;
 
-				&:focus {
-					width: 350px;
+				@media (max-width: 420px) {
+					width: 130px;
+
+					&:focus {
+						width: 145px;
+					}
+				}
+				@media (min-width: 576px) {
+					width: 250px;
+
+					&:focus {
+						width: 350px;
+					}
 				}
 			}
 
 			i {
-				color: $primary;
+				color: black;
 				opacity: 1 !important;
 				font-size: 25px;
 				right: -50px !important;

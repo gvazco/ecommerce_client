@@ -19,7 +19,7 @@ export default function Home() {
 	return (
 		<BasicLayout className="home">
 			{!products && <Loader active>Cargando Productos</Loader>}
-			{!products && size(products) === 0 && (
+			{products && size(products) === 0 && (
 				<div>
 					<h3>No hay productos</h3>
 				</div>

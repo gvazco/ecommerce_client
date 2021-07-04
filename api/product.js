@@ -52,3 +52,15 @@ export async function getProductByUrlApi(path) {
 		return null;
 	}
 }
+
+export async function searchProductsApi(title) {
+	try {
+		const url = `${BASE_PATH}/products?_q=${title}`;
+		const response = await fetch(url);
+		const result = await response.json();
+		return result;
+	} catch (error) {
+		console.log(error);
+		return null;
+	}
+}

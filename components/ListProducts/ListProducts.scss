@@ -1,12 +1,18 @@
 .list-products {
+	padding-left: 25px;
 	&__product {
 		padding: 15px;
+
 		&:hover {
 			opacity: 0.9;
 		}
 
 		img {
 			width: 100%;
+		}
+
+		a {
+			text-decoration-line: none !important;
 		}
 
 		h2 {

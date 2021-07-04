@@ -1,50 +1,108 @@
 .menu {
-  background-color: $background-gray-dark;
-  border-radius: 0;
+	background-color: $background-gray-dark;
+	border-radius: 0;
 
-  .ui.grid {
-    margin: 0;
-  }
+	.ui.grid {
+		margin: 0;
+	}
 
-  &__left,
-  &__right {
-    padding: 0 !important;
-    display: flex !important;
-    align-items: center;
+	.navbar {
+		.item {
+			color: $font-light;
+			border-radius: 20 !important;
+			font-size: 15px;
+			font-weight: 500;
+			margin-right: 10px !important;
+			padding: 5px;
 
-    .ui.menu {
-      border: 0;
-      box-shadow: none;
-      height: 100%;
-      background: transparent;
+			&:hover {
+				color: $font-light;
+				text-decoration: none;
+				border-radius: 20 !important;
+				text-shadow: 1px 1px 2px black;
+				cursor: pointer;
+				border-bottom: 1px solid $primary;
+			}
 
-      .icon {
-        margin-right: 10px !important;
-        color: $primary;
-      }
+			&.active {
+				border-radius: 20 !important;
+				text-shadow: 1px 1px 2px black;
+				border-bottom: 2px solid $primary;
+			}
+		}
 
-      .item {
-        color: $font-light;
-        border-radius: 0 !important;
+		button {
+			z-index: 9999;
+			border: none;
+			position: inherit;
+			right: 20px;
 
-        &:hover {
-          color: $font-light;
-          background-color: $background-dark-absolute;
+			box-shadow: -3px -3px 6px $background-gray-dark,
+				3px 3px 6px $background-dark-absolute;
 
-          &:before {
-            background-color: $background-dark-absolute;
-          }
-        }
+			&:focus-within {
+				box-shadow: -3px -3px 6px $background-gray-dark,
+					3px 3px 6px $background-dark-absolute;
+			}
 
-        &.m-0 i {
-          margin: 0 !important;
-        }
-      }
-    }
-  }
+			&:active,
+			&:hover,
+			&:focus {
+				box-shadow: inset -3px -3px 6px $background-gray-dark,
+					inset 3px 3px 6px $background-dark-absolute;
+			}
+		}
+	}
 
-  &__right {
-    display: flex;
-    justify-content: flex-end;
-  }
+	&__left,
+	&__right {
+		padding: 0 !important;
+		display: flex !important;
+		align-items: center;
+
+		.ui.menu {
+			border: 0;
+			box-shadow: none;
+			height: 100%;
+			background: transparent;
+
+			a {
+				cursor: pointer;
+			}
+
+			.icon {
+				margin-right: 10px !important;
+				color: $primary;
+			}
+
+			.item {
+				color: $font-light;
+				border-radius: 0 !important;
+
+				span {
+					@media (max-width: 576px) {
+						display: none;
+					}
+				}
+
+				&:hover {
+					color: $font-light;
+					background-color: $background-dark-absolute;
+
+					&:before {
+						background-color: $background-dark-absolute;
+					}
+				}
+
+				&.m-0 i {
+					margin: 0 !important;
+				}
+			}
+		}
+	}
+
+	&__right {
+		display: flex;
+		justify-content: flex-end;
+	}
 }

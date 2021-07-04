@@ -1,8 +1,10 @@
 .basic-layout {
 	min-height: 100vh;
 	background-image: url("https://gamer-ecommerce.s3.amazonaws.com/static/SAM_2245.jpg");
-	background-size: contain;
+	background-size: cover;
 	background-position: center;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
 
 	.content {
 		background-color: $background-gray-light;

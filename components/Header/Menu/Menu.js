@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Container, Menu, Grid, Icon } from "semantic-ui-react";
+import { Container, Menu, Grid, Icon, Label } from "semantic-ui-react";
+import { Navbar, Nav, NavDropdown, NavbarBrand } from "react-bootstrap";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import { map } from "lodash";
 import BasicModal from "../../Modal/BasicModal";
 import Auth from "../../Auth";
 import useAuth from "../../../hooks/useAuth";
+import useCart from "../../../hooks/useCart";
 import { getMeApi } from "../../../api/user";
 import { getPlatformsApi } from "../../../api/platform";
 
@@ -74,21 +77,47 @@ export default function MenuWeb() {
 
 function MenuPlatforms(props) {
 	const { platforms } = props;
+	const router = useRouter();
+	const { asPath } = router;
+
 	return (
-		<Menu>
-			{map(platforms, (platform) => (
-				<Link href={`/products/${platform.url}`} key={platform._id}>
-					<Menu.Item as="a" name={platform.url}>
-						{platform.title}
-					</Menu.Item>
-				</Link>
-			))}
-		</Menu>
+		// <Menu>
+		// 	{map(platforms, (platform) => (
+		// 		<Link href={`/products/${platform.url}`} key={platform._id}>
+		// 			<Menu.Item as="a" name={platform.url}>
+		// 				{platform.title}
+		// 			</Menu.Item>
+		// 		</Link>
+		// 	))}
+		// </Menu>
+
+		<Navbar collapseOnSelect expand="lg" bg="transparent" variant="dark">
+			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
+			<Navbar.Collapse id="responsive-navbar-nav">
+				<Nav className="mr-auto ">
+					{map(platforms, (platform) => (
+						<Link href={`/products/${platform.url}`} key={platform._id}>
+							<Menu.Item
+								as="a"
+								name={platform.url}
+								className={
+									router.asPath === `/products/${platform.url}` ? "active" : ""
+								}
+							>
+								{platform.title}
+							</Menu.Item>
+						</Link>
+					))}
+				</Nav>
+			</Navbar.Collapse>
+		</Navbar>
 	);
 }
 
 function MenuOptions(props) {
 	const { onShowModal, user, logout } = props;
+	const { productsCart } = useCart();
+
 	return (
 		<Menu>
 			{user ? (
@@ -98,7 +127,7 @@ function MenuOptions(props) {
 							<Icon name="money bill alternate outline" />
 						</Menu.Item>
 					</Link>
-					<Link href="/whislist">
+					<Link href="/wishlist">
 						<Menu.Item className="m-0" as="a">
 							<Icon name="heart outline" />
 						</Menu.Item>
@@ -106,12 +135,17 @@ function MenuOptions(props) {
 					<Link href="/cart">
 						<Menu.Item as="a" className="m-0">
 							<Icon name="cart" />
+							{productsCart > 0 && (
+								<Label color="red" floating circular>
+									{productsCart}
+								</Label>
+							)}
 						</Menu.Item>
 					</Link>
 					<Link href="/account">
 						<Menu.Item as="a">
 							<Icon name="user outline" />
-							{user.name}
+							<span>{user.name}</span>
 						</Menu.Item>
 					</Link>
 					<Menu.Item className="m-0" onClick={logout}>

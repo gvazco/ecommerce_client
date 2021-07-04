@@ -53,7 +53,7 @@ function Product(props) {
 							) : (
 								<span />
 							)}
-							<span className="price">${product.price} MXN </span>
+							<span className="price">${product.price.toFixed(2)} MXN </span>
 						</div>
 					</div>
 					<h2>{product.title}</h2>
