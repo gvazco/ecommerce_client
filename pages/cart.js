@@ -3,6 +3,8 @@ import BasicLayout from "../layouts/BasicLayout";
 import { getProductByUrlApi } from "../api/product";
 import useCart from "../hooks/useCart";
 import SummaryCart from "../components/Cart/SummaryCart";
+import AddressShipping from "../components/Cart/AddressShipping/AddressShipping";
+import Payment from "../components/Cart/Payment/Payment";
 
 export default function Cart() {
 	const { getProductsCart } = useCart();
@@ -22,6 +24,9 @@ function EmptyCart() {
 function FullCart(props) {
 	const { products } = props;
 	const [productsData, setProductsData] = useState(null);
+	const [reloadCart, setReloadCart] = useState(false);
+	const [address, setAddress] = useState(null);
+	console.log(address)
 
 	useEffect(() => {
 		(async () => {
@@ -32,11 +37,17 @@ function FullCart(props) {
 			}
 			setProductsData(productsTemp);
 		})();
-	}, []);
+		setReloadCart(false)
+	}, [reloadCart]);
 
 	return (
 		<BasicLayout className="empty-cart">
-			<SummaryCart products={productsData} />
+			<SummaryCart products={productsData} 
+			reloadCart={reloadCart}
+			setReloadCart={setReloadCart}/>
+				<AddressShipping setAddress={setAddress}/>
+
+					{address && <Payment products={productsData} address={address}/>}
 		</BasicLayout>
 	);
 }

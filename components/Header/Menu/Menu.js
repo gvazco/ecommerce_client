@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Menu, Grid, Icon, Label } from "semantic-ui-react";
-import { Navbar, Nav, NavDropdown, NavbarBrand } from "react-bootstrap";
+// import { Navbar, Nav, NavDropdown, NavbarBrand } from "react-bootstrap";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { map } from "lodash";
@@ -41,17 +41,13 @@ export default function MenuWeb() {
 				<Grid>
 					<Grid.Column
 						className="menu__left"
-						computer={10}
-						tablet={8}
-						mobile={16}
+						width={6}
 					>
 						<MenuPlatforms platforms={platforms} />
 					</Grid.Column>
 					<Grid.Column
 						className="menu__right"
-						computer={6}
-						tablet={8}
-						mobile={16}
+						width={10}
 					>
 						{user !== undefined && (
 							<MenuOptions
@@ -81,36 +77,16 @@ function MenuPlatforms(props) {
 	const { asPath } = router;
 
 	return (
-		// <Menu>
-		// 	{map(platforms, (platform) => (
-		// 		<Link href={`/products/${platform.url}`} key={platform._id}>
-		// 			<Menu.Item as="a" name={platform.url}>
-		// 				{platform.title}
-		// 			</Menu.Item>
-		// 		</Link>
-		// 	))}
-		// </Menu>
-
-		<Navbar collapseOnSelect expand="lg" bg="transparent" variant="dark">
-			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
-			<Navbar.Collapse id="responsive-navbar-nav">
-				<Nav className="mr-auto ">
-					{map(platforms, (platform) => (
-						<Link href={`/products/${platform.url}`} key={platform._id}>
-							<Menu.Item
-								as="a"
-								name={platform.url}
-								className={
-									router.asPath === `/products/${platform.url}` ? "active" : ""
-								}
-							>
-								{platform.title}
-							</Menu.Item>
-						</Link>
-					))}
-				</Nav>
-			</Navbar.Collapse>
-		</Navbar>
+		 <Menu>
+		 	{map(platforms, (platform) => (
+				<Link href={`/products/${platform.url}`} key={platform._id}>
+				<Menu.Item as="a" name={platform.url}>
+					{platform.title}
+					</Menu.Item>
+		 		</Link>
+			))}
+		 </Menu>
+		
 	);
 }
 
