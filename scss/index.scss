@@ -11,6 +11,7 @@
 @import "../pages/wishlist.scss";
 @import "../pages/search.scss";
 @import "../pages/cart.scss";
+@import "../pages/orders.scss";
 
 /*----------  COMPONENTS  ----------*/
 @import "../components/Header/Header.scss";
@@ -33,3 +34,4 @@
 @import "../components/Cart/AddressShipping/AddressShipping.scss";
 @import "../components/Cart/Payment/Payment.scss";
 @import "../components/Cart/Payment/FormPayment/FormPayment.scss";
+@import "../components/Orders/Order/Order.scss"

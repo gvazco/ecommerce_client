@@ -1,28 +1,61 @@
-import React from 'react'
-import {Button} from "semantic-ui-react"
-import {useRouter} from "next/router"
-import {CardElement, useStripe, useElements} from "@stripe/react-stripe-js"
-import {toast} from "react-toastify"
-import {size} from "lodash"
-import useAuth from "../../../../hooks/useAuth"
-import useCart from "../../../../hooks/useCart"
+import React, { useState } from "react";
+import { Button } from "semantic-ui-react";
+import { useRouter } from "next/router";
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { toast } from "react-toastify";
+import { size } from "lodash";
+import useAuth from "../../../../hooks/useAuth";
+import useCart from "../../../../hooks/useCart";
+import { paymentCartApi } from "../../../../api/cart";
 
 export default function FormPayment(props) {
+  const { products, address } = props;
+  const [loading, setLoading] = useState(false);
+  const stripe = useStripe();
+  const elements = useElements();
+  const { auth, logout, setReloadUser } = useAuth();
+  const { removeAllProductsCart } = useCart();
+  const router = useRouter();
 
-    const { products, address } = props;
-    const [loading, setLoading] = useState(false)
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setLoading(true);
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        setLoading(true);
-            console.log("Realizando Pago...")
-        }
-            
-    return (
-        <form className="form-payment" onSubmit={handleSubmit}>
-            <CardElement />
-            <Button type="submit" loading={loading} >Pagar</Button>
-        </form>
-    )
+    if (!stripe || !elements) return;
+
+    const cardElement = elements.getElement(CardElement);
+    const result = await stripe.createToken(cardElement);
+
+    if (result.error) {
+      toast.error(result.error.message);
+    } else {
+      const response = await paymentCartApi(
+        result.token,
+        products,
+        auth.idUser,
+        address,
+        logout
+      );
+
+      if (size(response) > 0) {
+        toast.success("Su pedido se ha completado");
+        removeAllProductsCart();
+        setReloadUser(true);
+        router.push("/orders");
+      } else {
+        toast.error("Error al realizar su pedido.");
+      }
+    }
+
+    setLoading(false);
+  };
+
+  return (
+    <form className="form-payment" onSubmit={handleSubmit}>
+      <CardElement />
+      <Button type="submit" loading={loading} disabled={!stripe}>
+        Pagar
+      </Button>
+    </form>
+  );
 }
-

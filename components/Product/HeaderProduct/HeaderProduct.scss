@@ -47,7 +47,7 @@
 		justify-content: space-between;
 		background-color: $background-dark-absolute;
 		color: $font-light;
-		padding: 15px 20px;
+		padding: 15px;
 		font-size: 18px;
 		margin-top: 15px;
 
@@ -90,7 +90,7 @@
 
 		&-btn.ui.button {
 			position: relative;
-			width: 200px;
+			width: 180px;
 			background-color: $primary !important;
 			color: $font-light !important;
 			font-size: 18px;
